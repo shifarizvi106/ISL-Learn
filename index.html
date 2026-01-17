@@ -1,59 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISL Bridge</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
-
 <div class="app">
 
-    <!-- Header -->
-    <header class="top-bar">
-        <h1>ISL Bridge</h1>
-        <p>Learn Indian Sign Language</p>
-    </header>
+  <header class="top-bar">
+    <h1>ISL Bridge</h1>
+    <p id="levelTitle">Level 1: Greetings</p>
+  </header>
 
-    <!-- Progress -->
-    <div class="progress">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+  <!-- Progress dots -->
+  <div class="progress" id="progressDots"></div>
+
+  <!-- Lesson Card -->
+  <div class="card">
+
+    <h2 id="questionWord">HELLO</h2>
+
+    <!-- Avatar -->
+    <div class="avatar">
+      <div class="head"></div>
+      <div class="body"></div>
+      <div class="hand left"></div>
+      <div class="hand right" id="rightHand"></div>
     </div>
 
-    <!-- Lesson Card -->
-    <div class="card">
+    <!-- MCQ options -->
+    <div class="options" id="options"></div>
 
-        <p class="prompt">Translate this word:</p>
-        <h2 class="question" id="questionWord">HELLO</h2>
+    <!-- Feedback -->
+    <p class="feedback" id="feedback"></p>
 
-        <!-- Avatar -->
-        <div class="avatar">
-            <div class="head"></div>
-            <div class="body"></div>
-            <div class="hand left" id="leftHand"></div>
-            <div class="hand right" id="rightHand"></div>
-        </div>
+    <!-- Navigation -->
+    <button id="nextBtn" disabled>Next</button>
 
-        <!-- Feedback -->
-        <p class="feedback" id="feedbackText">Type the sign meaning below</p>
-
-        <!-- Input -->
-        <input 
-            id="answerInput"
-            type="text"
-            placeholder="Type your answer"
-        />
-
-        <!-- Button -->
-        <button id="checkBtn">Check</button>
-
-    </div>
+  </div>
 
 </div>
 
 <script src="app.js"></script>
 </body>
-</html>
