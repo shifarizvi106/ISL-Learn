@@ -1,39 +1,60 @@
 /* =========================
-   SOUND EFFECTS
+   SOUND
 ========================= */
 const correctSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
 const wrongSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3");
 
 /* =========================
-   ISL DICTIONARY (ACCURATE)
+   REAL ISL DATA (SIMPLIFIED)
 ========================= */
 const ISL_DICTIONARY = {
   hello: {
-    description: "Open hand wave",
-    options: ["Wave", "Clap", "Point", "Thumbs up"]
+    gloss: "HELLO",
+    description: "Open hand moves outward from the forehead",
+    handshape: "Open-5",
+    location: "Forehead",
+    mcq: [
+      "Open hand wave from forehead",
+      "Clapping hands",
+      "Pointing forward",
+      "Thumbs up"
+    ],
+    correctIndex: 0
   },
   thank_you: {
-    description: "Hand from chin outward",
-    options: ["Chin outward", "Wave", "Point", "Tap chest"]
+    gloss: "THANK-YOU",
+    description: "Flat hand moves forward from the chin",
+    handshape: "Flat",
+    location: "Chin",
+    mcq: [
+      "Hand moves forward from chin",
+      "Wave near forehead",
+      "Tap chest",
+      "Point down"
+    ],
+    correctIndex: 0
   },
   water: {
-    description: "W handshape at chin",
-    options: ["W at chin", "Cup hand", "Point down", "Tap wrist"]
+    gloss: "WATER",
+    description: "‘W’ handshape taps the chin",
+    handshape: "W",
+    location: "Chin",
+    mcq: [
+      "W hand taps chin",
+      "Cup hand forward",
+      "Point to mouth",
+      "Tap wrist"
+    ],
+    correctIndex: 0
   }
 };
 
 /* =========================
-   LEVEL STRUCTURE
+   LEVELS
 ========================= */
 const LEVELS = [
-  {
-    name: "Greetings",
-    questions: ["hello", "thank_you"]
-  },
-  {
-    name: "Basics",
-    questions: ["water"]
-  }
+  { name: "Greetings", questions: ["hello", "thank_you"] },
+  { name: "Basics", questions: ["water"] }
 ];
 
 /* =========================
@@ -43,18 +64,43 @@ let levelIndex = 0;
 let questionIndex = 0;
 
 /* =========================
-   DOM REFERENCES
+   DOM
 ========================= */
+const homeScreen = document.getElementById("homeScreen");
+const learnScreen = document.getElementById("learnScreen");
+
 const levelTitle = document.getElementById("levelTitle");
 const questionWord = document.getElementById("questionWord");
+const islInfo = document.getElementById("islInfo");
 const optionsDiv = document.getElementById("options");
 const feedback = document.getElementById("feedback");
 const nextBtn = document.getElementById("nextBtn");
+const saveBtn = document.getElementById("saveBtn");
 const rightHand = document.getElementById("rightHand");
 const progressDots = document.getElementById("progressDots");
 
 /* =========================
-   CORE FUNCTIONS
+   HOME BUTTONS
+========================= */
+document.getElementById("startBtn").onclick = () => {
+  homeScreen.classList.remove("active");
+  learnScreen.classList.add("active");
+  loadQuestion();
+};
+
+document.getElementById("loadBtn").onclick = () => {
+  const saved = JSON.parse(localStorage.getItem("isl-progress"));
+  if (saved) {
+    levelIndex = saved.levelIndex;
+    questionIndex = saved.questionIndex;
+    homeScreen.classList.remove("active");
+    learnScreen.classList.add("active");
+    loadQuestion();
+  }
+};
+
+/* =========================
+   CORE LOGIC
 ========================= */
 function loadQuestion() {
   const level = LEVELS[levelIndex];
@@ -62,29 +108,31 @@ function loadQuestion() {
   const data = ISL_DICTIONARY[key];
 
   levelTitle.textContent = `Level ${levelIndex + 1}: ${level.name}`;
-  questionWord.textContent = key.replace("_", " ").toUpperCase();
+  questionWord.textContent = data.gloss;
+  islInfo.textContent = `Handshape: ${data.handshape} • Location: ${data.location}`;
   feedback.textContent = "";
   nextBtn.disabled = true;
   optionsDiv.innerHTML = "";
+  rightHand.className = "hand right";
 
   renderDots(level.questions.length);
 
-  data.options.forEach(option => {
+  data.mcq.forEach((option, index) => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
     btn.textContent = option;
-    btn.onclick = () => checkAnswer(option, data.description, btn);
+    btn.onclick = () => checkAnswer(index, data, btn);
     optionsDiv.appendChild(btn);
   });
 }
 
-function checkAnswer(answer, correct, btn) {
+function checkAnswer(index, data, btn) {
   if (!nextBtn.disabled) return;
 
-  if (answer.toLowerCase().includes(correct.split(" ")[0].toLowerCase())) {
+  if (index === data.correctIndex) {
     feedback.textContent = "Correct! 🎉";
     correctSound.play();
-    rightHand.className = "hand right sign-known";
+    rightHand.classList.add("sign-known");
     nextBtn.disabled = false;
   } else {
     feedback.textContent = "Try again 💭";
@@ -104,10 +152,9 @@ function renderDots(count) {
 }
 
 /* =========================
-   NAVIGATION
+   NAVIGATION + SAVE
 ========================= */
 nextBtn.onclick = () => {
-  rightHand.className = "hand right";
   questionIndex++;
 
   if (questionIndex >= LEVELS[levelIndex].questions.length) {
@@ -115,18 +162,21 @@ nextBtn.onclick = () => {
     questionIndex = 0;
 
     if (levelIndex >= LEVELS.length) {
-      questionWord.textContent = "ALL DONE 🎉";
+      questionWord.textContent = "DONE 🎉";
       optionsDiv.innerHTML = "";
       feedback.textContent = "You completed all levels!";
       nextBtn.style.display = "none";
+      saveBtn.style.display = "none";
       return;
     }
   }
-
   loadQuestion();
 };
 
-/* =========================
-   INIT
-========================= */
-loadQuestion();
+saveBtn.onclick = () => {
+  localStorage.setItem("isl-progress", JSON.stringify({
+    levelIndex,
+    questionIndex
+  }));
+  feedback.textContent = "Progress saved 💾";
+};
