@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ISL Learn</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISL Bridge</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="app">
 
+    <!-- Header -->
     <header class="top-bar">
-        <h1>ISL Learn</h1>
-        <p>Learn Indian Sign Language.</p>
+        <h1>ISL Bridge</h1>
+        <p>Learn Indian Sign Language</p>
     </header>
 
-    <div class="card">
-
-        <div class="avatar">
-           
-        </div>
-
-        <div class="output">
-            <p class="output-word">Ready</p>
-            <p class="output-desc">Type something to begin</p>
-        </div>
-
+    <!-- Progress -->
+    <div class="progress">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
     </div>
 
-    <div class="input-area">
+    <!-- Lesson Card -->
+    <div class="card">
+
+        <p class="prompt">Translate this word:</p>
+        <h2 class="question" id="questionWord">HELLO</h2>
+
+        <!-- Avatar -->
+        <div class="avatar">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="hand left" id="leftHand"></div>
+            <div class="hand right" id="rightHand"></div>
+        </div>
+
+        <!-- Feedback -->
+        <p class="feedback" id="feedbackText">Type the sign meaning below</p>
+
+        <!-- Input -->
         <input 
-            id="textInput" 
-            type="text" 
-            placeholder="Type a word (e.g. hello)"
-
-            <div class="avatar">
-    <div class="head"></div>
-    <div class="body"></div>
-    <div class="hand left" id="leftHand"></div>
-    <div class="hand right" id="rightHand"></div>
-</div>
-
+            id="answerInput"
+            type="text"
+            placeholder="Type your answer"
         />
-        <button id="translateBtn">Translate</button>
+
+        <!-- Button -->
+        <button id="checkBtn">Check</button>
+
     </div>
 
 </div>
