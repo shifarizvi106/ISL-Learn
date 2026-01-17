@@ -76,3 +76,34 @@ button {
 button:hover {
     background: #593de0;
 }
+
+/* ===== RAW AVATAR ANIMATIONS ===== */
+
+#avatarIcon {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+/* Known sign: confident wave/bounce */
+.sign-known {
+    animation: signBounce 0.6s ease;
+}
+
+@keyframes signBounce {
+    0%   { transform: scale(1) rotate(0deg); }
+    30%  { transform: scale(1.2) rotate(-10deg); }
+    60%  { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Fingerspelling: repetitive pulse */
+.sign-fingerspell {
+    animation: fingerPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes fingerPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
