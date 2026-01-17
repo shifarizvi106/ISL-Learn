@@ -18,92 +18,132 @@ body {
     padding: 20px;
 }
 
+/* Header */
 .top-bar {
     text-align: center;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
+/* Progress dots */
+.progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+}
+
+.dot.active {
+    background: white;
+}
+
+/* Card */
 .card {
     background: white;
     border-radius: 20px;
     padding: 25px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    margin-bottom: 20px;
 }
 
-.avatar {
-    font-size: 4rem;
+.prompt {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.question {
+    color: #6b4eff;
     margin-bottom: 15px;
 }
 
-.output-word {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #6b4eff;
+/* Avatar */
+.avatar {
+    position: relative;
+    width: 140px;
+    height: 200px;
+    margin: 0 auto 15px;
 }
 
-.output-desc {
-    font-size: 1rem;
-    color: #666;
+.head {
+    width: 50px;
+    height: 50px;
+    background: #ffd1e8;
+    border-radius: 50%;
+    margin: 0 auto;
 }
 
-.input-area {
-    display: flex;
-    gap: 10px;
+.body {
+    width: 70px;
+    height: 80px;
+    background: #7ecbff;
+    border-radius: 12px;
+    margin: 6px auto 0;
 }
 
+.hand {
+    width: 22px;
+    height: 22px;
+    background: #ff9ad5;
+    border-radius: 50%;
+    position: absolute;
+    top: 95px;
+}
+
+.hand.left { left: 15px; }
+.hand.right { right: 15px; }
+
+/* Animations */
+.sign-known {
+    animation: wave 0.6s ease;
+}
+
+@keyframes wave {
+    0% { transform: rotate(0); }
+    50% { transform: rotate(30deg); }
+    100% { transform: rotate(0); }
+}
+
+.sign-wrong {
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Input */
 input {
-    flex: 1;
+    width: 100%;
     padding: 12px;
     border-radius: 12px;
-    border: none;
+    border: 2px solid #ddd;
+    margin-top: 10px;
     font-size: 1rem;
 }
 
 button {
-    padding: 12px 18px;
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
     border-radius: 12px;
     border: none;
     background: #6b4eff;
     color: white;
-    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
 }
 
-button:hover {
-    background: #593de0;
+.feedback {
+    margin-top: 10px;
+    color: #666;
 }
-
-/* ===== RAW AVATAR ANIMATIONS ===== */
-
-#avatarIcon {
-    display: inline-block;
-    transition: transform 0.2s ease;
-}
-
-/* Known sign: confident wave/bounce */
-.sign-known {
-    animation: signBounce 0.6s ease;
-}
-
-@keyframes signBounce {
-    0%   { transform: scale(1) rotate(0deg); }
-    30%  { transform: scale(1.2) rotate(-10deg); }
-    60%  { transform: scale(1.2) rotate(10deg); }
-    100% { transform: scale(1) rotate(0deg); }
-}
-
-/* Fingerspelling: repetitive pulse */
-.sign-fingerspell {
-    animation: fingerPulse 0.8s ease-in-out infinite;
-}
-
-@keyframes fingerPulse {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
