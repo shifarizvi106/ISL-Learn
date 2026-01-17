@@ -1,35 +1,63 @@
-const input = document.getElementById("textInput");
-const button = document.getElementById("translateBtn");
-const wordOut = document.querySelector(".output-word");
-const descOut = document.querySelector(".output-desc");
-const avatar = document.querySelector(".avatar");
+const lessons = [
+    { word: "HELLO", answer: "wave" },
+    { word: "THANKS", answer: "chin outward" },
+    { word: "WATER", answer: "w hand at chin" }
+];
 
-// Test starter dictionary
-const dictionary = {
-    hello: "Open hand wave",
-    thanks: "Hand from chin outward",
-    water: "W handshape at chin",
-    you: "Point forward",
-    me: "Point to chest"
-};
+let current = 0;
+
+const questionWord = document.getElementById("questionWord");
+const input = document.getElementById("answerInput");
+const feedback = document.getElementById("feedbackText");
+const button = document.getElementById("checkBtn");
+const dots = document.querySelectorAll(".dot");
+
+const leftHand = document.getElementById("leftHand");
+const rightHand = document.getElementById("rightHand");
+
+function loadLesson() {
+    questionWord.textContent = lessons[current].word;
+    input.value = "";
+    feedback.textContent = "Type the sign meaning below";
+    updateDots();
+}
+
+function updateDots() {
+    dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === current);
+    });
+}
+
+function resetHands() {
+    leftHand.className = "hand left";
+    rightHand.className = "hand right";
+}
 
 button.addEventListener("click", () => {
-    const text = input.value.trim().toLowerCase();
+    const userAnswer = input.value.toLowerCase();
+    const correct = lessons[current].answer;
 
-    if (!text) {
-        wordOut.textContent = "Oops";
-        descOut.textContent = "Type something first";
-        avatar.textContent = "😅";
-        return;
-    }
+    resetHands();
 
-    wordOut.textContent = text.toUpperCase();
+    if (userAnswer.includes(correct)) {
+        feedback.textContent = "Correct! 🎉";
+        rightHand.classList.add("sign-known");
 
-    if (dictionary[text]) {
-        descOut.textContent = dictionary[text];
-        avatar.textContent = "🤟";
+        setTimeout(() => {
+            current++;
+            if (current < lessons.length) {
+                loadLesson();
+            } else {
+                feedback.textContent = "Lesson complete! 🌟";
+                questionWord.textContent = "DONE";
+                button.disabled = true;
+            }
+        }, 800);
+
     } else {
-        descOut.textContent = "Fingerspelling this word";
-        avatar.textContent = "✋";
+        feedback.textContent = "Try again 💭";
+        rightHand.classList.add("sign-wrong");
     }
 });
+
+loadLesson();
