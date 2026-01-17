@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ISL Learn</title>
-    <link rel="stylesheet" href="style.css" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISL Bridge</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISL Bridge</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
 <div class="app">
 
-  <header class="top-bar">
+  <!-- HOME SCREEN -->
+  <div id="homeScreen" class="screen active">
     <h1>ISL Bridge</h1>
-    <p id="levelTitle">Level 1: Greetings</p>
-  </header>
+    <p class="subtitle">Learn Indian Sign Language</p>
 
-  <!-- Progress dots -->
-  <div class="progress" id="progressDots"></div>
+    <button id="startBtn">Start Learning</button>
+    <button id="loadBtn" class="secondary">Load Saved Progress</button>
+  </div>
 
-  <!-- Lesson Card -->
-  <div class="card">
+  <!-- LEARNING SCREEN -->
+  <div id="learnScreen" class="screen">
 
-    <h2 id="questionWord">HELLO</h2>
+    <header class="top-bar">
+      <h2 id="levelTitle">Level 1</h2>
+    </header>
 
-    <!-- Avatar -->
-    <div class="avatar">
-      <div class="head"></div>
-      <div class="body"></div>
-      <div class="hand left"></div>
-      <div class="hand right" id="rightHand"></div>
+    <div class="progress" id="progressDots"></div>
+
+    <div class="card">
+      <h2 id="questionWord">HELLO</h2>
+
+      <!-- Avatar -->
+      <div class="avatar">
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="hand left"></div>
+        <div class="hand right" id="rightHand"></div>
+      </div>
+
+      <!-- ISL Info -->
+      <p class="isl-info" id="islInfo"></p>
+
+      <!-- Options -->
+      <div class="options" id="options"></div>
+
+      <p class="feedback" id="feedback"></p>
+
+      <button id="nextBtn" disabled>Next</button>
+      <button id="saveBtn" class="secondary">Save Progress</button>
     </div>
-
-    <!-- MCQ options -->
-    <div class="options" id="options"></div>
-
-    <!-- Feedback -->
-    <p class="feedback" id="feedback"></p>
-
-    <!-- Navigation -->
-    <button id="nextBtn" disabled>Next</button>
 
   </div>
 
