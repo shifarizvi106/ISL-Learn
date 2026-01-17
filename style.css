@@ -1,191 +1,70 @@
 * {
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 body {
-    margin: 0;
-    background: linear-gradient(135deg, #ff9ad5, #b28dff, #7ecbff);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9ad5, #b28dff, #7ecbff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .app {
-    width: 100%;
-    max-width: 420px;
-    padding: 20px;
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
 }
 
-/* Header */
-.top-bar {
-    text-align: center;
-    color: white;
-    margin-bottom: 15px;
+.screen {
+  display: none;
+  text-align: center;
 }
 
-/* Progress dots */
-.progress {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 15px;
+.screen.active {
+  display: block;
 }
 
-.dot {
-    width: 10px;
-    height: 10px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
+h1, h2 {
+  color: #fff;
 }
 
-.dot.active {
-    background: white;
+.subtitle {
+  color: #f3f3f3;
+  margin-bottom: 20px;
 }
 
-/* Card */
-.card {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.prompt {
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.question {
-    color: #6b4eff;
-    margin-bottom: 15px;
-}
-
-/* Avatar */
-.avatar {
-    position: relative;
-    width: 140px;
-    height: 200px;
-    margin: 0 auto 15px;
-}
-
-.head {
-    width: 50px;
-    height: 50px;
-    background: #ffd1e8;
-    border-radius: 50%;
-    margin: 0 auto;
-}
-
-.body {
-    width: 70px;
-    height: 80px;
-    background: #7ecbff;
-    border-radius: 12px;
-    margin: 6px auto 0;
-}
-
-.hand {
-    width: 22px;
-    height: 22px;
-    background: #ff9ad5;
-    border-radius: 50%;
-    position: absolute;
-    top: 95px;
-}
-
-.hand.left { left: 15px; }
-.hand.right { right: 15px; }
-
-/* Animations */
-.sign-known {
-    animation: wave 0.6s ease;
-}
-
-@keyframes wave {
-    0% { transform: rotate(0); }
-    50% { transform: rotate(30deg); }
-    100% { transform: rotate(0); }
-}
-
-.sign-wrong {
-    animation: shake 0.4s;
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    100% { transform: translateX(0); }
-}
-
-/* Input */
-input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    margin-top: 10px;
-    font-size: 1rem;
-}
-
+/* Buttons */
 button {
-    margin-top: 12px;
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #6b4eff;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.feedback {
-    margin-top: 10px;
-    color: #666;
-}
-/* ===== MCQ OPTIONS ===== */
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.option-btn {
-  padding: 12px;
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
   border-radius: 14px;
-  border: 2px solid #ddd;
-  background: #f7f7ff;
-  font-weight: 600;
+  border: none;
+  background: #6b4eff;
+  color: white;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.option-btn:hover {
-  background: #ece7ff;
+button.secondary {
+  background: #ffffff;
+  color: #6b4eff;
 }
 
-.option-btn.wrong {
-  background: #ffd6e7;
-  border-color: #ff5fa2;
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* ===== FEEDBACK ===== */
-.feedback {
-  margin-top: 10px;
-  color: #555;
-  font-weight: 600;
-}
-
-/* ===== PROGRESS DOTS ===== */
+/* Progress */
 .progress {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 12px;
+  margin: 10px 0;
 }
 
 .dot {
@@ -197,4 +76,96 @@ button {
 
 .dot.active {
   background: white;
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+  color: #6b4eff;
+}
+
+/* Avatar */
+.avatar {
+  position: relative;
+  width: 140px;
+  height: 200px;
+  margin: 10px auto;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  background: #ffd1e8;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.body {
+  width: 70px;
+  height: 80px;
+  background: #7ecbff;
+  border-radius: 12px;
+  margin: 6px auto 0;
+}
+
+.hand {
+  width: 22px;
+  height: 22px;
+  background: #ff9ad5;
+  border-radius: 50%;
+  position: absolute;
+  top: 95px;
+}
+
+.hand.left { left: 15px; }
+.hand.right { right: 15px; }
+
+.sign-known {
+  animation: wave 0.6s ease;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0); }
+  50% { transform: rotate(30deg); }
+  100% { transform: rotate(0); }
+}
+
+/* MCQ */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.option-btn {
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  background: #f7f7ff;
+  font-weight: 600;
+}
+
+.option-btn.wrong {
+  background: #ffd6e7;
+  border-color: #ff5fa2;
+}
+
+/* Text */
+.feedback {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.isl-info {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 5px 0;
 }
