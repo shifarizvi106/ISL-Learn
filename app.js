@@ -1,63 +1,132 @@
-const lessons = [
-    { word: "HELLO", answer: "wave" },
-    { word: "THANKS", answer: "chin outward" },
-    { word: "WATER", answer: "w hand at chin" }
+/* =========================
+   SOUND EFFECTS
+========================= */
+const correctSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
+const wrongSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3");
+
+/* =========================
+   ISL DICTIONARY (ACCURATE)
+========================= */
+const ISL_DICTIONARY = {
+  hello: {
+    description: "Open hand wave",
+    options: ["Wave", "Clap", "Point", "Thumbs up"]
+  },
+  thank_you: {
+    description: "Hand from chin outward",
+    options: ["Chin outward", "Wave", "Point", "Tap chest"]
+  },
+  water: {
+    description: "W handshape at chin",
+    options: ["W at chin", "Cup hand", "Point down", "Tap wrist"]
+  }
+};
+
+/* =========================
+   LEVEL STRUCTURE
+========================= */
+const LEVELS = [
+  {
+    name: "Greetings",
+    questions: ["hello", "thank_you"]
+  },
+  {
+    name: "Basics",
+    questions: ["water"]
+  }
 ];
 
-let current = 0;
+/* =========================
+   STATE
+========================= */
+let levelIndex = 0;
+let questionIndex = 0;
 
+/* =========================
+   DOM REFERENCES
+========================= */
+const levelTitle = document.getElementById("levelTitle");
 const questionWord = document.getElementById("questionWord");
-const input = document.getElementById("answerInput");
-const feedback = document.getElementById("feedbackText");
-const button = document.getElementById("checkBtn");
-const dots = document.querySelectorAll(".dot");
-
-const leftHand = document.getElementById("leftHand");
+const optionsDiv = document.getElementById("options");
+const feedback = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
 const rightHand = document.getElementById("rightHand");
+const progressDots = document.getElementById("progressDots");
 
-function loadLesson() {
-    questionWord.textContent = lessons[current].word;
-    input.value = "";
-    feedback.textContent = "Type the sign meaning below";
-    updateDots();
+/* =========================
+   CORE FUNCTIONS
+========================= */
+function loadQuestion() {
+  const level = LEVELS[levelIndex];
+  const key = level.questions[questionIndex];
+  const data = ISL_DICTIONARY[key];
+
+  levelTitle.textContent = `Level ${levelIndex + 1}: ${level.name}`;
+  questionWord.textContent = key.replace("_", " ").toUpperCase();
+  feedback.textContent = "";
+  nextBtn.disabled = true;
+  optionsDiv.innerHTML = "";
+
+  renderDots(level.questions.length);
+
+  data.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = option;
+    btn.onclick = () => checkAnswer(option, data.description, btn);
+    optionsDiv.appendChild(btn);
+  });
 }
 
-function updateDots() {
-    dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === current);
-    });
+function checkAnswer(answer, correct, btn) {
+  if (!nextBtn.disabled) return;
+
+  if (answer.toLowerCase().includes(correct.split(" ")[0].toLowerCase())) {
+    feedback.textContent = "Correct! 🎉";
+    correctSound.play();
+    rightHand.className = "hand right sign-known";
+    nextBtn.disabled = false;
+  } else {
+    feedback.textContent = "Try again 💭";
+    wrongSound.play();
+    btn.classList.add("wrong");
+  }
 }
 
-function resetHands() {
-    leftHand.className = "hand left";
-    rightHand.className = "hand right";
+function renderDots(count) {
+  progressDots.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    if (i === questionIndex) dot.classList.add("active");
+    progressDots.appendChild(dot);
+  }
 }
 
-button.addEventListener("click", () => {
-    const userAnswer = input.value.toLowerCase();
-    const correct = lessons[current].answer;
+/* =========================
+   NAVIGATION
+========================= */
+nextBtn.onclick = () => {
+  rightHand.className = "hand right";
+  questionIndex++;
 
-    resetHands();
+  if (questionIndex >= LEVELS[levelIndex].questions.length) {
+    levelIndex++;
+    questionIndex = 0;
 
-    if (userAnswer.includes(correct)) {
-        feedback.textContent = "Correct! 🎉";
-        rightHand.classList.add("sign-known");
-
-        setTimeout(() => {
-            current++;
-            if (current < lessons.length) {
-                loadLesson();
-            } else {
-                feedback.textContent = "Lesson complete! 🌟";
-                questionWord.textContent = "DONE";
-                button.disabled = true;
-            }
-        }, 800);
-
-    } else {
-        feedback.textContent = "Try again 💭";
-        rightHand.classList.add("sign-wrong");
+    if (levelIndex >= LEVELS.length) {
+      questionWord.textContent = "ALL DONE 🎉";
+      optionsDiv.innerHTML = "";
+      feedback.textContent = "You completed all levels!";
+      nextBtn.style.display = "none";
+      return;
     }
-});
+  }
 
-loadLesson();
+  loadQuestion();
+};
+
+/* =========================
+   INIT
+========================= */
+loadQuestion();
