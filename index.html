@@ -6,30 +6,27 @@
   <title>ISL Bridge</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
+  <body>
 <div class="app">
 
-  <!-- HOME SCREEN -->
-  <div id="homeScreen" class="screen active">
+  <!-- START PAGE -->
+  <div id="startScreen" class="screen active">
     <h1>ISL Bridge</h1>
     <p class="subtitle">Learn Indian Sign Language</p>
-
-    <button id="startBtn">Start Learning</button>
-    <button id="loadBtn" class="secondary">Load Saved Progress</button>
+    <button id="startLearningBtn">Start Learning</button>
   </div>
 
-  <!-- LEARNING SCREEN -->
-  <div id="learnScreen" class="screen">
+  <!-- LESSON 1 -->
+  <div id="lessonScreen" class="screen">
 
     <header class="top-bar">
-      <h2 id="levelTitle">Level 1</h2>
+      <h2>Lesson 1: Greetings</h2>
     </header>
 
-    <div class="progress" id="progressDots"></div>
-
     <div class="card">
-      <h2 id="questionWord">HELLO</h2>
+
+      <h3 id="signTitle">HELLO</h3>
 
       <!-- Avatar -->
       <div class="avatar">
@@ -39,16 +36,12 @@
         <div class="hand right" id="rightHand"></div>
       </div>
 
-      <!-- ISL Info -->
-      <p class="isl-info" id="islInfo"></p>
+      <!-- Explanation -->
+      <p class="isl-desc" id="signDescription"></p>
 
-      <!-- Options -->
-      <div class="options" id="options"></div>
+      <!-- Navigation -->
+      <button id="nextSignBtn">Next</button>
 
-      <p class="feedback" id="feedback"></p>
-
-      <button id="nextBtn" disabled>Next</button>
-      <button id="saveBtn" class="secondary">Save Progress</button>
     </div>
 
   </div>
@@ -58,3 +51,5 @@
 <script src="app.js"></script>
 </body>
 </html>
+
+  <
